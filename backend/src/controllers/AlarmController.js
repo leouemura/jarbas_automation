@@ -13,17 +13,22 @@ module.exports = {
         const id = crypto.randomBytes(4).toString('HEX');
         //pega id do usuario
         const userVerified = []
-        const payload = jwt.verify(token, 'jsonwebtokensecret123456789-yudi')
-        const user_id = await connection('users').select('*').where('id', payload.id[0].id)
-        
-        if(!user_id){
-            return res.send(401)
+        try{
+            const payload = jwt.verify(token, 'jsonwebtokensecret123456789-yudi')
+            const user_id = await connection('users').select('*').where('id', payload.id[0].id)
+            
+            if(!user_id){
+                return res.send(401)
+            }
+    
+            userVerified.push(user_id[0].id)
+            
+            if(userVerified.length==0){
+                res.send(401)
+            }
         }
-        
-        userVerified.push(user_id[0].id)
-        
-        if(userVerified.length==0){
-            res.send(401)
+        catch(error){
+            return res.send({error})
         }
         //coloca array frequency em ordem numerica crescente
         let frequencyOrdered = frequency.sort()
@@ -37,6 +42,7 @@ module.exports = {
         }
         else{
             await connection('alarms').insert({ id, hour, minute, frequency:frequencyOrdered, user_id: userVerified[0] });
+            await connection('alarmstates').insert({id, state: "ON", user_id: userVerified[0]})
             return res.json({id, hour, minute, frequency:frequencyOrdered, user_id: userVerified[0]})
         }
     },

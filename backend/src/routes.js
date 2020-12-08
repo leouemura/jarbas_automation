@@ -2,6 +2,7 @@ const express = require('express');
 const UserController = require('./controllers/UserController');
 const LoginController = require('./controllers/LoginController');
 const AlarmController = require('./controllers/AlarmController');
+const AlarmStateController = require('./controllers/AlarmStateController');
 const routes = express.Router();
 
 /* EXEMPLO 
@@ -25,6 +26,8 @@ routes.post('/alarms', AlarmController.create)
 routes.get('/alarms', AlarmController.index)
 routes.delete('/alarms', AlarmController.delete)
 
+routes.put('/alarmstates', AlarmStateController.update)
+routes.get('/alarmstates', AlarmStateController.index)
 
 
 
