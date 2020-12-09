@@ -1,10 +1,8 @@
 const connection = require('../database/connection');
 const jwt = require('jsonwebtoken');
-const { create } = require('./UserController');
-const e = require('express');
 
 module.exports = {
-    async update(req,res){
+    async update (req,res){
         const {
             id,
             state,
