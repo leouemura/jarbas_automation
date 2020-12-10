@@ -2,6 +2,7 @@ const express = require('express');
 const UserController = require('./controllers/UserController');
 const LoginController = require('./controllers/LoginController');
 const AlarmController = require('./controllers/AlarmController');
+const HouseController = require('./controllers/HouseController');
 const routes = express.Router();
 
 /* EXEMPLO 
@@ -27,7 +28,10 @@ routes.get('/alarms', AlarmController.index)
 routes.delete('/alarms', AlarmController.delete)
 
 
-
+routes.post('/houses', HouseController.create)
+routes.put('/houses', HouseController.update)
+routes.get('/houses', HouseController.index)
+routes.delete('/houses', HouseController.delete)
 
 
 
