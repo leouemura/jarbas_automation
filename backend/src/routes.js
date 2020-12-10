@@ -4,6 +4,7 @@ const LoginController = require('./controllers/LoginController');
 const AlarmController = require('./controllers/AlarmController');
 const HouseController = require('./controllers/HouseController');
 const EspController = require('./controllers/EspController');
+const LastController = require('./controllers/LastController');
 const routes = express.Router();
 
 /* EXEMPLO 
@@ -42,7 +43,7 @@ routes.put('/esps', EspController.update)
 routes.get('/esps', EspController.index)
 routes.delete('/esps', EspController.delete)
 
-
+routes.get('/lastalarmesps', LastController.index)
 
 
 module.exports = routes;
