@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import './styles.css';
 import {FiLogOut} from 'react-icons/fi';
 import {Link, useHistory} from 'react-router-dom';
-
+import { ALARMACTIONS } from '../../components/store/action';
+import {useSelector, useDispatch} from 'react-redux'
 import api from '../../services/api';
 
 
@@ -13,7 +14,11 @@ export default function Alarm(){
     const [minute,setMinute] = useState()
     const [state,setState] = useState()
     const [frequency,setFrequency] = useState([])
+    const history = useHistory()
+    const dispatch = useDispatch()
 
+    const update = useSelector(state => state.update)
+    
     function handleUpdate(event){
         event.preventDefault()
         //console.log(event.target.textContent)
@@ -21,33 +26,55 @@ export default function Alarm(){
         let id = event.target.attributes.value.value
         let hour = event.target.nextSibling.firstElementChild.attributes.hour.value
         let minute = event.target.nextSibling.firstElementChild.attributes.minute.value
-        let frequencyString = event.target.parentElement.lastChild.lastChild.firstChild.parentElement.attributes.frequency.value;
+        let frequency = event.target.parentElement.lastChild.lastChild.firstChild.parentElement.attributes.frequency.value;
         let state = event.target.parentElement.lastChild.lastChild.firstChild.parentElement.attributes.state.value
-
+        
+        dispatch({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})          ///////
+        console.log({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})
+        
         setHour(hour)
         setMinute(minute)
         setState(state)
-        setFrequency(frequencyString)
+        setFrequency(frequency)
         
         console.log(id)
         console.log(`${hour} horas e ${minute} minutos...`)
-        console.log(frequencyString)
+        console.log(frequency)
         console.log(state)
+        history.push('/alarms/update');
         
     }
     function handleTime(event){
         event.preventDefault()
         //console.log(event.target.textContent)
-        setId(event.target.attributes.value.value)
+        setId({id: event.target.attributes.value.value})
         let id = event.target.attributes.value.value
-        console.log(id)
+        let hour = event.target.attributes.hour.value
+        let minute = event.target.attributes.minute.value
+        let frequency = event.target.nextSibling.attributes.frequency.value
+        let state = event.target.nextSibling.attributes.state.value
+        console.log(id,' ', hour,' ', minute,' ', frequency,' ', state )
+
+        dispatch({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})          ///////
+        console.log({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})
+
+        history.push('/alarms/update');
     }
     function handleDetails(event){
         event.preventDefault()
         //console.log(event.target.textContent)
-        setId(event.target.attributes.value.value)
+        setId({id: event.target.attributes.value.value})
         let id = event.target.attributes.value.value
-        console.log(id)
+        let hour = event.target.previousSibling.attributes.hour.value
+        let minute = event.target.previousSibling.attributes.minute.value
+        let frequency = event.target.attributes.frequency.value
+        let state = event.target.attributes.state.value
+        console.log(id,' ', hour,' ', minute,' ', frequency,' ', state )
+
+        dispatch({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})          ///////
+        console.log({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})
+
+        history.push('/alarms/update');
     }
 
     
@@ -104,9 +131,9 @@ export default function Alarm(){
     return(
         <div className="alarm-container">
             <div className="all_alarms-container">
-            <AlarmList userAlarms={userAlarms} />
+                <AlarmList userAlarms={userAlarms} />
             </div>
-            
+           
             
         </div>
     )
