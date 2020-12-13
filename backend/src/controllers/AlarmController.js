@@ -142,6 +142,7 @@ module.exports = {
         const [,token] = req.headers.authorization.split(' ')
         const userVerified = []
         try{
+            console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOU")
             const payload = jwt.verify(token, 'jsonwebtokensecret123456789-yudi')
             //console.log(payload)
             const user_id = await connection('users').select('*').where('id', payload.id[0].id)

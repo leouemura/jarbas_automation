@@ -12,8 +12,11 @@ module.exports={
         } = req.body
         */
         const [, hash] = req.headers.authorization.split(' ')
+        //console.log( req.headers.authorization)
         const [username_email, password] = Buffer.from(hash,'base64').toString().split(":")
-        console.log(username_email)
+        //let encode = username_email+":"+password
+        //console.log(Buffer.from(encode).toString('base64'))
+        console.log(hash)
         const passwordDecrypt = crypto.createHash('md5').update(password).digest('hex');
 
         const passUsername = await connection('users').select('username').where('username',username_email).andWhere('password', passwordDecrypt)
