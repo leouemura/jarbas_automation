@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import './styles.css';
 import {FiLogOut} from 'react-icons/fi';
 import {Link, useHistory} from 'react-router-dom';
-import { ALARMACTIONS } from '../../components/store/action';
+import { ALARMACTIONS } from '../../../components/store/action';
 import {useSelector, useDispatch} from 'react-redux'
-import api from '../../services/api';
+import api from '../../../services/api';
 
 
 export default function Alarm(){
@@ -28,6 +28,12 @@ export default function Alarm(){
         let minute = event.target.nextSibling.firstElementChild.attributes.minute.value
         let frequency = event.target.parentElement.lastChild.lastChild.firstChild.parentElement.attributes.frequency.value;
         let state = event.target.parentElement.lastChild.lastChild.firstChild.parentElement.attributes.state.value
+
+        localStorage.setItem('alarm-id', id)
+        localStorage.setItem('alarm-hour', hour)
+        localStorage.setItem('alarm-minute', minute)
+        localStorage.setItem('alarm-frequency', frequency)
+        localStorage.setItem('alarm-state', state)
         
         dispatch({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})          ///////
         console.log({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})
@@ -55,6 +61,12 @@ export default function Alarm(){
         let state = event.target.nextSibling.attributes.state.value
         console.log(id,' ', hour,' ', minute,' ', frequency,' ', state )
 
+        localStorage.setItem('alarm-id', id)
+        localStorage.setItem('alarm-hour', hour)
+        localStorage.setItem('alarm-minute', minute)
+        localStorage.setItem('alarm-frequency', frequency)
+        localStorage.setItem('alarm-state', state)
+
         dispatch({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})          ///////
         console.log({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})
 
@@ -71,10 +83,16 @@ export default function Alarm(){
         let state = event.target.attributes.state.value
         console.log(id,' ', hour,' ', minute,' ', frequency,' ', state )
 
+        localStorage.setItem('alarm-id', id)
+        localStorage.setItem('alarm-hour', hour)
+        localStorage.setItem('alarm-minute', minute)
+        localStorage.setItem('alarm-frequency', frequency)
+        localStorage.setItem('alarm-state', state)
+
         dispatch({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})          ///////
         console.log({type: ALARMACTIONS.UPDATE_ALARM, id, hour, minute, frequency, state})
 
-        history.push('/alarms/update');
+        history.push('/alarms/index');
     }
 
     
